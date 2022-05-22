@@ -1,0 +1,50 @@
+<div class="container mt-3">
+  <div class="row">
+    <div class="col-12">
+      <h1>All our villas</h1>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <% if @query %>
+        <p>You searched for <strong><%= @query %></strong>. We found <%= @villas.count %> villas out of our <%= Villa.count %> on our website.</p>
+      <% else %>
+        <p>All <%= Villa.count %> villas.</p>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row">
+    <% @villas.each do |villa| %>
+      <div class="col-4">
+        <div class="villa-card">
+          <div class="villa-card-image" style="background-image: url('<%= villa.picture_url %>')"></div>
+          <div class="villa-card-content">
+            <div class="villa-card-title">
+              <h4><%= villa.name %></h4>
+            </div>
+            <p><%= villa.address %></p>
+            <div class="flex">
+              <div class="flex">
+                <i class="material-icons mr-2">people</i><span><%= villa.number_of_guests %></span>
+              </div>
+              <div class="flex ml-3">
+                <i class="material-icons mr-2">euro_symbol</i> <%= villa.price_per_night %>
+              </div>
+            </div>
+          </div>
+          <div class="villa-card-actions">
+            <%= link_to 'More info', villa_path(villa) %>
+            <%= link_to 'Edit', edit_villa_path(villa), class: 'ml-3 text-warning' %>
+            <%= link_to "Remove", villa_path(villa),
+                method: :delete,
+                data: { confirm: "Are you sure?" },
+                class: 'ml-3 text-danger'
+            %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
